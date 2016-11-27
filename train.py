@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import tensorflow as tf
 import numpy as np
 import glob
@@ -5,7 +7,7 @@ import sys
 from matplotlib import pyplot as plt
 from batchnorm import ConvolutionalBatchNormalizer
 
-filenames = sorted(glob.glob("../colornet/*/*.jpg"))
+filenames = sorted(glob.glob("/root/persistant_data/datasets/places_2/train_256/*/*/*.jpg"))
 batch_size = 1
 num_epochs = 1e+9
 
@@ -240,12 +242,14 @@ saver = tf.train.Saver()
 
 # Create the graph, etc.
 init_op = tf.initialize_all_variables()
+init_local_op = tf.initialize_local_variables()
 
 # Create a session for running operations in the Graph.
 sess = tf.Session()
 
 # Initialize the variables.
 sess.run(init_op)
+sess.run(init_local_op)
 
 merged = tf.merge_all_summaries()
 writer = tf.train.SummaryWriter("tb_log", sess.graph_def)
